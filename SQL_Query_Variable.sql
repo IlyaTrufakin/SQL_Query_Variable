@@ -1,8 +1,8 @@
 
 
 
---1. ïîêàçàòü ãîðèçîíòàëüíóþ ëèíèþ èç çâ¸çäî÷åê äëèíîé @L
---âåðòèêàëüíî
+--1. Ð¿Ð¾ÐºÐ°Ð·Ð°Ñ‚ÑŒ Ð³Ð¾Ñ€Ð¸Ð·Ð¾Ð½Ñ‚Ð°Ð»ÑŒÐ½ÑƒÑŽ Ð»Ð¸Ð½Ð¸ÑŽ Ð¸Ð· Ð·Ð²Ñ‘Ð·Ð´Ð¾Ñ‡ÐµÐº Ð´Ð»Ð¸Ð½Ð¾Ð¹ @L
+--Ð²ÐµÑ€Ñ‚Ð¸ÐºÐ°Ð»ÑŒÐ½Ð¾
 DECLARE @StarsCount INT = 10
 WHILE (@StarsCount>0)
 BEGIN
@@ -10,7 +10,7 @@ BEGIN
   SET @StarsCount = @StarsCount - 1
 END
 
---ãîðèçîíòàëüíî
+--Ð³Ð¾Ñ€Ð¸Ð·Ð¾Ð½Ñ‚Ð°Ð»ÑŒÐ½Ð¾
 DECLARE @StarsCountH INT = 10
 DECLARE @String nvarchar(max) = ''
 WHILE (@StarsCountH>0)
@@ -23,29 +23,29 @@ PRINT @String
 
 
 
---2. ñêðèïò ïðîâåðÿåò, êàêîå ñåé÷àñ âðåìÿ ñóòîê, è âûäà¸ò ïðèâåòñòâèå "äîáðûé âå÷åð!" èëè "äîáðûé äåíü!"
+--2. ÑÐºÑ€Ð¸Ð¿Ñ‚ Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑÐµÑ‚, ÐºÐ°ÐºÐ¾Ðµ ÑÐµÐ¹Ñ‡Ð°Ñ Ð²Ñ€ÐµÐ¼Ñ ÑÑƒÑ‚Ð¾Ðº, Ð¸ Ð²Ñ‹Ð´Ð°Ñ‘Ñ‚ Ð¿Ñ€Ð¸Ð²ÐµÑ‚ÑÑ‚Ð²Ð¸Ðµ "Ð´Ð¾Ð±Ñ€Ñ‹Ð¹ Ð²ÐµÑ‡ÐµÑ€!" Ð¸Ð»Ð¸ "Ð´Ð¾Ð±Ñ€Ñ‹Ð¹ Ð´ÐµÐ½ÑŒ!"
 DECLARE @CurrentTime TIME = GETDATE()
 DECLARE @Message NVARCHAR(max)
 
 IF @CurrentTime >= '04:30:00' AND @CurrentTime < '11:00:00'
-	SET @Message = 'Äîáðîå óòðî!'
+	SET @Message = 'Ð”Ð¾Ð±Ñ€Ð¾Ðµ ÑƒÑ‚Ñ€Ð¾!'
 
 ELSE IF @CurrentTime >= '11:00:00' AND @CurrentTime < '17:00:00'
-    SET @Message = 'Äîáðûé äåíü!'
+    SET @Message = 'Ð”Ð¾Ð±Ñ€Ñ‹Ð¹ Ð´ÐµÐ½ÑŒ!'
 
 ELSE IF @CurrentTime >= '17:00:00' AND @CurrentTime < '23:00:00'
-    SET @Message = 'Äîáðûé âå÷åð!'
+    SET @Message = 'Ð”Ð¾Ð±Ñ€Ñ‹Ð¹ Ð²ÐµÑ‡ÐµÑ€!'
 
 ELSE
-    SET @Message = 'Äîáðîé íî÷è!'
+    SET @Message = 'Ð”Ð¾Ð±Ñ€Ð¾Ð¹ Ð½Ð¾Ñ‡Ð¸!'
 
 PRINT @Message
 
 
 
 
---3. ñêðèïò ãåíåðèðóåò ñëó÷àéíûé ñëîæíûé ïàðîëü äëèíîé @N ñèìâîëîâ
-DECLARE @PasswordLength INT = 10 --  æåëàåìàÿ äëèíà ïàðîëÿ
+--3. ÑÐºÑ€Ð¸Ð¿Ñ‚ Ð³ÐµÐ½ÐµÑ€Ð¸Ñ€ÑƒÐµÑ‚ ÑÐ»ÑƒÑ‡Ð°Ð¹Ð½Ñ‹Ð¹ ÑÐ»Ð¾Ð¶Ð½Ñ‹Ð¹ Ð¿Ð°Ñ€Ð¾Ð»ÑŒ Ð´Ð»Ð¸Ð½Ð¾Ð¹ @N ÑÐ¸Ð¼Ð²Ð¾Ð»Ð¾Ð²
+DECLARE @PasswordLength INT = 10 --  Ð¶ÐµÐ»Ð°ÐµÐ¼Ð°Ñ Ð´Ð»Ð¸Ð½Ð° Ð¿Ð°Ñ€Ð¾Ð»Ñ
 DECLARE @AvailableCharacters NVARCHAR(100) = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+='
 DECLARE @Password NVARCHAR(max) = ''
 
@@ -61,13 +61,13 @@ PRINT @Password
 
 
 
---4. ïîêàçàòü ôàêòîðèàëû âñåõ ÷èñåë îò 0 äî 25
+--4. Ð¿Ð¾ÐºÐ°Ð·Ð°Ñ‚ÑŒ Ñ„Ð°ÐºÑ‚Ð¾Ñ€Ð¸Ð°Ð»Ñ‹ Ð²ÑÐµÑ… Ñ‡Ð¸ÑÐµÐ» Ð¾Ñ‚ 0 Ð´Ð¾ 25
 DECLARE @Number INT = 0
 DECLARE @Factorial NUMERIC(38, 0) = 1
 
 WHILE (@Number <= 25)
 BEGIN
-    PRINT 'Ôàêòîðèàë ÷èñëà ' + CAST(@Number AS NVARCHAR(10)) + ': ' + CAST(@Factorial AS NVARCHAR(50))
+    PRINT 'Ð¤Ð°ÐºÑ‚Ð¾Ñ€Ð¸Ð°Ð» Ñ‡Ð¸ÑÐ»Ð° ' + CAST(@Number AS NVARCHAR(10)) + ': ' + CAST(@Factorial AS NVARCHAR(50))
     SET @Number = @Number + 1
     SET @Factorial = @Factorial * @Number
 END
@@ -75,17 +75,17 @@ END
 
 
 
---5. ïîêàçàòü âñå ïðîñòûå ÷èñëà îò 3 äî 100000 (ÿ óìåíüøèë ìàêñ.÷èñëî íà ïîðÿäîê, ñëèøêîì äîëãî ïîäñ÷èòûâàåò)
+--5. Ð¿Ð¾ÐºÐ°Ð·Ð°Ñ‚ÑŒ Ð²ÑÐµ Ð¿Ñ€Ð¾ÑÑ‚Ñ‹Ðµ Ñ‡Ð¸ÑÐ»Ð° Ð¾Ñ‚ 3 Ð´Ð¾ 100000 (Ñ ÑƒÐ¼ÐµÐ½ÑŒÑˆÐ¸Ð» Ð¼Ð°ÐºÑ.Ñ‡Ð¸ÑÐ»Ð¾ Ð½Ð° Ð¿Ð¾Ñ€ÑÐ´Ð¾Ðº, ÑÐ»Ð¸ÑˆÐºÐ¾Ð¼ Ð´Ð¾Ð»Ð³Ð¾ Ð¿Ð¾Ð´ÑÑ‡Ð¸Ñ‚Ñ‹Ð²Ð°ÐµÑ‚)
 DECLARE @start INT = 3
 DECLARE @end INT = 100000
-DECLARE @primes TABLE (  Number INT) -- Ñîçäàíèå âðåìåííîé òàáëèöû äëÿ õðàíåíèÿ èíôîðìàöèè î ïðîñòûõ ÷èñëàõ
+DECLARE @primes TABLE (  Number INT) -- Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð²Ñ€ÐµÐ¼ÐµÐ½Ð½Ð¾Ð¹ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ñ‹ Ð´Ð»Ñ Ñ…Ñ€Ð°Ð½ÐµÐ½Ð¸Ñ Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ð¸ Ð¾ Ð¿Ñ€Ð¾ÑÑ‚Ñ‹Ñ… Ñ‡Ð¸ÑÐ»Ð°Ñ…
 
 WHILE (@start <= @end)
 BEGIN
   DECLARE @isPrime BIT = 1
   DECLARE @divisor INT = 2
 
-   -- Ïðîâåðêà, ÿâëÿåòñÿ ëè ÷èñëî ïðîñòûì
+   -- ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ°, ÑÐ²Ð»ÑÐµÑ‚ÑÑ Ð»Ð¸ Ñ‡Ð¸ÑÐ»Ð¾ Ð¿Ñ€Ð¾ÑÑ‚Ñ‹Ð¼
   WHILE (@divisor * @divisor <= @start)
   BEGIN
     IF (@start % @divisor = 0)
@@ -95,13 +95,13 @@ BEGIN
     END
     SET @divisor = @divisor + 1
   END
-   -- Åñëè ÷èñëî ïðîñòîå, äîáàâëÿåì åãî â òàáëèöó
+   -- Ð•ÑÐ»Ð¸ Ñ‡Ð¸ÑÐ»Ð¾ Ð¿Ñ€Ð¾ÑÑ‚Ð¾Ðµ, Ð´Ð¾Ð±Ð°Ð²Ð»ÑÐµÐ¼ ÐµÐ³Ð¾ Ð² Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ñƒ
   IF (@isPrime = 1) INSERT INTO @primes (Number) VALUES (@start)
 
   SET @start = @start + 1
 END
 
-SELECT Number -- Âûâîä òàáëèöû ïðîñòûõ ÷èñåë
+SELECT Number -- Ð’Ñ‹Ð²Ð¾Ð´ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ñ‹ Ð¿Ñ€Ð¾ÑÑ‚Ñ‹Ñ… Ñ‡Ð¸ÑÐµÐ»
 FROM @primes
 
 
@@ -109,26 +109,26 @@ FROM @primes
 
 
 
---6. ïîêàçàòü íîìåðà âñåõ ñ÷àñòëèâûõ òðàìâàéíûõ áèëåòîâ
+--6. Ð¿Ð¾ÐºÐ°Ð·Ð°Ñ‚ÑŒ Ð½Ð¾Ð¼ÐµÑ€Ð° Ð²ÑÐµÑ… ÑÑ‡Ð°ÑÑ‚Ð»Ð¸Ð²Ñ‹Ñ… Ñ‚Ñ€Ð°Ð¼Ð²Ð°Ð¹Ð½Ñ‹Ñ… Ð±Ð¸Ð»ÐµÑ‚Ð¾Ð²
 DECLARE @TicketNumber INT = 100000
 
 WHILE (@TicketNumber <= 999999)
 BEGIN
-    DECLARE @TicketString NVARCHAR(6) = RIGHT('000000' + CAST(@TicketNumber AS NVARCHAR(6)), 6) -- ïðåîáðàçîâàíèå â ñòðîêó 6 çíà÷í.
+    DECLARE @TicketString NVARCHAR(6) = RIGHT('000000' + CAST(@TicketNumber AS NVARCHAR(6)), 6) -- Ð¿Ñ€ÐµÐ¾Ð±Ñ€Ð°Ð·Ð¾Ð²Ð°Ð½Ð¸Ðµ Ð² ÑÑ‚Ñ€Ð¾ÐºÑƒ 6 Ð·Ð½Ð°Ñ‡Ð½.
 
-	-- ïîëó÷åíèå ñóììû 3õ ëåâûõ ÷èñåë
+	-- Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ ÑÑƒÐ¼Ð¼Ñ‹ 3Ñ… Ð»ÐµÐ²Ñ‹Ñ… Ñ‡Ð¸ÑÐµÐ»
     DECLARE @SumLeftHalf INT =
         CAST(SUBSTRING(@TicketString, 1, 1) AS INT) +
         CAST(SUBSTRING(@TicketString, 2, 1) AS INT) +
         CAST(SUBSTRING(@TicketString, 3, 1) AS INT)
 
-	-- ïîëó÷åíèå ñóììû 3õ ïðàâûõ ÷èñåë
+	-- Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ ÑÑƒÐ¼Ð¼Ñ‹ 3Ñ… Ð¿Ñ€Ð°Ð²Ñ‹Ñ… Ñ‡Ð¸ÑÐµÐ»
     DECLARE @SumRightHalf INT =
         CAST(SUBSTRING(@TicketString, 4, 1) AS INT) +
         CAST(SUBSTRING(@TicketString, 5, 1) AS INT) +
         CAST(SUBSTRING(@TicketString, 6, 1) AS INT)
 
-    IF (@SumLeftHalf = @SumRightHalf) -- ñðàâíåíèå ñóìì
+    IF (@SumLeftHalf = @SumRightHalf) -- ÑÑ€Ð°Ð²Ð½ÐµÐ½Ð¸Ðµ ÑÑƒÐ¼Ð¼
     PRINT @TicketString
 
     SET @TicketNumber = @TicketNumber + 1
