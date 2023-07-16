@@ -44,7 +44,7 @@ PRINT @Message
 
 
 
---3. скрипт генерирует случайный сложный пароль длиной @N символов
+--3. скрипт генерирует случайный сложный пароль длиной @PasswordLength символов
 DECLARE @PasswordLength INT = 10 --  желаемая длина пароля
 DECLARE @AvailableCharacters NVARCHAR(100) = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+='
 DECLARE @Password NVARCHAR(max) = ''
