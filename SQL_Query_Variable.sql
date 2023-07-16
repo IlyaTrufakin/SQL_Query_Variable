@@ -1,93 +1,136 @@
-USE [Library]
-GO
 
 
 
---показать имена преподавателей и названия книг, которые они взяли в библиотеке:
-CREATE VIEW TeacherAndBooks
-AS
-SELECT Teacher.first_name AS 'Имя учителя', Teacher.last_name AS 'Фамилия учителя', Book.name AS Книга
-FROM Teacher
-JOIN T_Cards ON Teacher.id = T_Cards.id_teacher
-JOIN Book ON Book.id = T_Cards.id_book;
+--1. показать горизонтальную линию из звёздочек длиной @L
+--вертикально
+DECLARE @StarsCount INT = 10
+WHILE (@StarsCount>0)
+BEGIN
+  PRINT '*'
+  SET @StarsCount = @StarsCount - 1
+END
 
-SELECT * FROM TeacherAndBooks;
-
-
-
---показать имена студентов, которые взяли, но не вернули книги
-CREATE VIEW StudentsAndBooks
-AS
-SELECT Student.first_name AS 'Имя студента', Student.last_name AS 'Фамилия студента'
-FROM Student
-JOIN S_Cards ON Student.id = S_Cards.id_student
-WHERE S_Cards.date_in IS NULL;
-
-SELECT * FROM StudentsAndBooks;
-
-
---показать имена студентов никогда не бравших книг
-CREATE VIEW StudentsWithoutBooks
-AS
-SELECT Student.first_name AS 'Имя студента', Student.last_name AS 'Фамилия студента'
-FROM Student
-LEFT JOIN S_Cards ON Student.id = S_Cards.id_student
-WHERE S_Cards.id IS NULL;
-
-
-SELECT * FROM StudentsWithoutBooks;
-
-
-
---показать  имя библиотекаря, который выдал больше всего книг
--- 1й вариант: НЕ используя order by:
-CREATE VIEW TopLibrarian
-AS
-SELECT Librarian.first_name AS 'Имя библиотекаря', Librarian.last_name AS 'Фамилия библиотекаря', books_count AS 'Выдано книг'
-FROM (SELECT id_librarian, COUNT(*) AS books_count
-		FROM (SELECT id_librarian FROM S_Cards UNION ALL SELECT id_librarian FROM T_Cards) AS all_cards
-			  GROUP BY id_librarian
-			  HAVING COUNT(*) = (SELECT MAX(books_count) 
-					FROM (SELECT COUNT(*) AS books_count
-						FROM (SELECT id_librarian FROM S_Cards UNION ALL SELECT id_librarian FROM T_Cards) AS all_cards
-						GROUP BY id_librarian) 
-			  AS max_counts)
-	) AS ctss
-JOIN Librarian ON ctss.id_librarian = Librarian.id;
-
-
--- 2й вариант: используя order by:
-CREATE VIEW TopLibrarian
-AS
-SELECT TOP 1 Librarian.first_name AS 'Имя библиотекаря', Librarian.last_name AS 'Фамилия библиотекаря', books_count AS 'Выдано книг'
-FROM (SELECT id_librarian, COUNT(*) AS books_count
-	FROM (SELECT id_librarian FROM S_Cards UNION ALL SELECT id_librarian FROM T_Cards) AS all_cards
-	GROUP BY id_librarian
-) AS count_all
-JOIN Librarian ON count_all.id_librarian = Librarian.id
-ORDER BY books_count DESC;
-
-SELECT * FROM TopLibrarian;
+--горизонтально
+DECLARE @StarsCountH INT = 10
+DECLARE @String nvarchar(max) = ''
+WHILE (@StarsCountH>0)
+BEGIN
+	SET @String = @String + '*'
+	SET @StarsCountH = @StarsCountH - 1
+END
+PRINT @String
 
 
 
 
---показать  имя библиотекаря, которому вернули больше всего книг
---  используя order by:
-CREATE VIEW TopReturningLibrarian
-AS
-SELECT TOP 1 Librarian.first_name AS 'Имя библиотекаря', Librarian.last_name AS 'Фамилия библиотекаря', COUNT(*) AS returned_books_count
-FROM Librarian
-JOIN (SELECT id_librarian, date_in FROM S_Cards UNION ALL SELECT id_librarian, date_in FROM T_Cards) AS all_cards 
-ON Librarian.id = all_cards.id_librarian
-WHERE all_cards.date_in IS NOT NULL
-GROUP BY Librarian.first_name, Librarian.last_name
-ORDER BY returned_books_count DESC;
+--2. скрипт проверяет, какое сейчас время суток, и выдаёт приветствие "добрый вечер!" или "добрый день!"
+DECLARE @CurrentTime TIME = GETDATE()
+DECLARE @Message NVARCHAR(max)
 
-SELECT * FROM TopReturningLibrarian;
+IF @CurrentTime >= '04:30:00' AND @CurrentTime < '11:00:00'
+	SET @Message = 'Доброе утро!'
+
+ELSE IF @CurrentTime >= '11:00:00' AND @CurrentTime < '17:00:00'
+    SET @Message = 'Добрый день!'
+
+ELSE IF @CurrentTime >= '17:00:00' AND @CurrentTime < '23:00:00'
+    SET @Message = 'Добрый вечер!'
+
+ELSE
+    SET @Message = 'Доброй ночи!'
+
+PRINT @Message
+
+
+
+
+--3. скрипт генерирует случайный сложный пароль длиной @N символов
+DECLARE @PasswordLength INT = 10 --  желаемая длина пароля
+DECLARE @AvailableCharacters NVARCHAR(100) = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+='
+DECLARE @Password NVARCHAR(max) = ''
+
+WHILE (@PasswordLength >0)
+
+BEGIN
+    DECLARE @RandomIndex INT = ROUND(RAND() * (LEN(@AvailableCharacters) - 1) + 1, 0)
+    SET @Password = @Password + SUBSTRING(@AvailableCharacters, @RandomIndex, 1)
+    SET @PasswordLength = @PasswordLength - 1
+END
+
+PRINT @Password
+
+
+
+--4. показать факториалы всех чисел от 0 до 25
+DECLARE @Number INT = 0
+DECLARE @Factorial NUMERIC(38, 0) = 1
+
+WHILE (@Number <= 25)
+BEGIN
+    PRINT 'Факториал числа ' + CAST(@Number AS NVARCHAR(10)) + ': ' + CAST(@Factorial AS NVARCHAR(50))
+    SET @Number = @Number + 1
+    SET @Factorial = @Factorial * @Number
+END
+
+
+
+
+--5. показать все простые числа от 3 до 100000 (я уменьшил макс.число на порядок, слишком долго подсчитывает)
+DECLARE @start INT = 3
+DECLARE @end INT = 100000
+DECLARE @primes TABLE (  Number INT) -- Создание временной таблицы для хранения информации о простых числах
+
+WHILE (@start <= @end)
+BEGIN
+  DECLARE @isPrime BIT = 1
+  DECLARE @divisor INT = 2
+
+   -- Проверка, является ли число простым
+  WHILE (@divisor * @divisor <= @start)
+  BEGIN
+    IF (@start % @divisor = 0)
+    BEGIN
+      SET @isPrime = 0
+      BREAK
+    END
+    SET @divisor = @divisor + 1
+  END
+   -- Если число простое, добавляем его в таблицу
+  IF (@isPrime = 1) INSERT INTO @primes (Number) VALUES (@start)
+
+  SET @start = @start + 1
+END
+
+SELECT Number -- Вывод таблицы простых чисел
+FROM @primes
 
 
 
 
 
 
+--6. показать номера всех счастливых трамвайных билетов
+DECLARE @TicketNumber INT = 100000
+
+WHILE (@TicketNumber <= 999999)
+BEGIN
+    DECLARE @TicketString NVARCHAR(6) = RIGHT('000000' + CAST(@TicketNumber AS NVARCHAR(6)), 6) -- преобразование в строку 6 значн.
+
+	-- получение суммы 3х левых чисел
+    DECLARE @SumLeftHalf INT =
+        CAST(SUBSTRING(@TicketString, 1, 1) AS INT) +
+        CAST(SUBSTRING(@TicketString, 2, 1) AS INT) +
+        CAST(SUBSTRING(@TicketString, 3, 1) AS INT)
+
+	-- получение суммы 3х правых чисел
+    DECLARE @SumRightHalf INT =
+        CAST(SUBSTRING(@TicketString, 4, 1) AS INT) +
+        CAST(SUBSTRING(@TicketString, 5, 1) AS INT) +
+        CAST(SUBSTRING(@TicketString, 6, 1) AS INT)
+
+    IF (@SumLeftHalf = @SumRightHalf) -- сравнение сумм
+    PRINT @TicketString
+
+    SET @TicketNumber = @TicketNumber + 1
+
+END
